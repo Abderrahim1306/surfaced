@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NVE9T3FGWX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NVE9T3FGWX');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;700;900&family=Cabinet+Grotesk:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080f;--bg2:#0e0f1a;--bg3:#161728;--bg4:#1e2035;--bg5:#262840;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);--border3:rgba(255,255,255,0.18);
+  --text:#eeeef5;--text2:#8888aa;--text3:#4a4a6a;
+  --teal:#00d4aa;--teal-dim:rgba(0,212,170,0.1);--teal-glow:rgba(0,212,170,0.2);
+  --blue:#4d9fff;--blue-dim:rgba(77,159,255,0.1);
+  --purple:#9b7fff;--purple-dim:rgba(155,127,255,0.1);
+  --amber:#ffb84d;--amber-dim:rgba(255,184,77,0.1);
+  --red:#ff6b6b;--red-dim:rgba(255,107,107,0.1);
+  --green:#00d4aa;
+  --r:8px;--r-lg:14px;--r-xl:20px;--r-2xl:28px;
+}
+body{font-family:'Satoshi',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;overflow-x:hidden}
+button,input,select,textarea{font-family:'Satoshi',sans-serif}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
+
+/* ── NAV ── */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px;border-bottom:1px solid var(--border);background:rgba(7,8,15,0.92);backdrop-filter:blur(28px);position:sticky;top:0;z-index:300;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;cursor:pointer}
+.logo-mark{position:relative;width:30px;height:30px}
+.logo-mark svg{width:30px;height:30px}
+.logo-name{font-family:'Cabinet Grotesk',sans-serif;font-size:18px;font-weight:900;letter-spacing:-.5px;color:var(--text)}
+.logo-name span{color:var(--teal)}
+.nav-pills{display:flex;gap:1px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:3px;overflow-x:auto;flex:1;max-width:570px}
+.nav-pills::-webkit-scrollbar{display:none}
+.np{padding:5px 13px;border-radius:9px;font-size:12px;font-weight:700;color:var(--text2);border:none;background:transparent;white-space:nowrap;transition:all .18s;flex-shrink:0;cursor:pointer;letter-spacing:.01em}
+.np:hover{color:var(--text);background:var(--bg3)}
+.np.on{background:var(--teal);color:#07080f;box-shadow:0 0 16px var(--teal-glow)}
+.nav-r{display:flex;gap:8px;flex-shrink:0}
+.btn{padding:7px 16px;border-radius:var(--r);font-size:12px;font-weight:700;border:1px solid var(--border2);background:var(--bg3);color:var(--text);transition:all .18s;cursor:pointer;letter-spacing:.01em}
+.btn:hover{border-color:var(--border3);background:var(--bg4)}
+.btn-t{background:var(--teal);border-color:var(--teal);color:#07080f;box-shadow:0 0 18px var(--teal-glow)}
+.btn-t:hover{background:#00ebb8;box-shadow:0 0 28px var(--teal-glow)}
+.btn-g{background:transparent;border:1px solid var(--border2);color:var(--text2)}
+.btn-g:hover{color:var(--text);border-color:var(--border3)}
+.btn-lg{padding:12px 28px;font-size:14px;border-radius:var(--r-lg)}
+.btn-sm{padding:5px 12px;font-size:11px}
+.btn-outline{background:transparent;border:1px solid var(--teal);color:var(--teal)}
+.btn-outline:hover{background:var(--teal-dim)}
+
+/* ── PAGES ── */
+.page{display:none;animation:fu .22s ease}.page.on{display:block}
+@keyframes fu{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+
+/* ── UTIL ── */
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;letter-spacing:.04em;white-space:nowrap}
+.b-teal{background:var(--teal-dim);color:var(--teal)}
+.b-blue{background:var(--blue-dim);color:var(--blue)}
+.b-purple{background:var(--purple-dim);color:var(--purple)}
+.b-amber{background:var(--amber-dim);color:var(--amber)}
+.b-red{background:var(--red-dim);color:var(--red)}
+.b-gray{background:var(--bg4);color:var(--text3)}
+.plt{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;flex-shrink:0;font-family:'DM Mono',monospace}
+.plt-sm{width:20px;height:20px;border-radius:5px;font-size:8px}
+.slbl{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:9px}
+.sep{height:1px;background:var(--border);margin:14px 0}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-xl);padding:18px;transition:border-color .2s}
+.card:hover{border-color:var(--border2)}
+.main{padding:24px 28px;overflow-y:auto}
+.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;gap:14px}
+.pt{font-family:'Cabinet Grotesk',sans-serif;font-size:24px;font-weight:900;letter-spacing:-.5px}
+.ps{font-size:11px;color:var(--text2);margin-top:3px}
+.back{font-size:11px;color:var(--text3);cursor:pointer;margin-bottom:12px;display:inline-flex;align-items:center;gap:4px;transition:color .15s;border:none;background:none;padding:0}
+.back:hover{color:var(--text2)}
+.fld{margin-bottom:13px}
+.lbl{display:block;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.inp{width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:var(--r);font-size:13px;background:var(--bg2);color:var(--text);outline:none;transition:all .18s}
+.inp:focus{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-dim)}
+
+/* ── LANDING ── */
+.land{position:relative;overflow:hidden;min-height:calc(100vh - 52px)}
+.land-noise{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:.4;pointer-events:none}
+.land-glow1{position:absolute;top:-60px;left:10%;width:500px;height:500px;background:radial-gradient(ellipse,rgba(0,212,170,.08) 0%,transparent 65%);pointer-events:none}
+.land-glow2{position:absolute;top:100px;right:5%;width:400px;height:400px;background:radial-gradient(ellipse,rgba(77,159,255,.06) 0%,transparent 65%);pointer-events:none}
+.land-in{max-width:900px;margin:0 auto;padding:60px 28px 52px;position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);background:var(--teal-dim);border:1px solid rgba(0,212,170,.2);border-radius:20px;padding:5px 14px;margin-bottom:24px}
+.eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+.land-h1{font-family:'Cabinet Grotesk',sans-serif;font-size:62px;font-weight:900;line-height:1.03;letter-spacing:-2.5px;margin-bottom:10px}
+.land-h1 .surface{color:var(--teal);position:relative;display:inline-block}
+.land-h1 .surface::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:var(--teal);border-radius:1px;opacity:.5}
+.land-tagline{font-family:'Cabinet Grotesk',sans-serif;font-size:22px;font-weight:500;color:var(--text2);margin-bottom:18px;letter-spacing:-.3px}
+.land-sub{font-size:16px;color:var(--text2);max-width:520px;margin-bottom:36px;line-height:1.72;font-weight:400}
+.land-ctas{display:flex;gap:12px;margin-bottom:52px;flex-wrap:wrap;align-items:center}
+.land-ctas .divider{font-size:12px;color:var(--text3)}
+.plt-row-land{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:52px}
+.plt-chip{display:flex;align-items:center;gap:8px;padding:7px 13px;border:1px solid var(--border);border-radius:11px;background:var(--bg2);font-size:12px;font-weight:600;color:var(--text2);transition:all .2s;cursor:default}
+.plt-chip:hover{border-color:var(--border2);color:var(--text);transform:translateY(-2px)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-2xl);overflow:hidden}
+.feat{padding:26px;background:var(--bg2);transition:background .2s;position:relative}
+.feat:hover{background:var(--bg3)}
+.feat-ico{width:38px;height:38px;border-radius:10px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:13px;border:1px solid var(--border);transition:border-color .2s}
+.feat:hover .feat-ico{border-color:rgba(0,212,170,.3)}
+.feat-t{font-family:'Cabinet Grotesk',sans-serif;font-size:14px;font-weight:800;margin-bottom:7px;letter-spacing:-.2px}
+.feat-d{font-size:12px;color:var(--text2);line-height:1.6}
+.feat-new{font-size:9px;font-weight:700;padding:1px 6px;border-radius:5px;background:var(--teal-dim);color:var(--teal);margin-left:6px;letter-spacing:.04em;vertical-align:middle}
+/* hero visual */
+.hero-visual{margin:48px 0;border:1px solid var(--border);border-radius:var(--r-2xl);background:var(--bg2);overflow:hidden;position:relative}
+.hv-bar{height:36px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:8px}
+.hv-dot{width:8px;height:8px;border-radius:50%}
+.hv-url{font-family:'DM Mono',monospace;font-size:11px;color:var(--text3);margin-left:8px}
+.hv-body{padding:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.hv-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px}
+.hv-card-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.hv-score{font-family:'Cabinet Grotesk',sans-serif;font-size:38px;font-weight:900;background:linear-gradient(135deg,var(--teal),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;letter-spacing:-1px}
+.hv-mini-bar{height:3px;background:var(--bg4);border-radius:2px;margin-bottom:6px;overflow:hidden}
+.hv-mini-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--teal),var(--blue))}
+.hv-dim-lbl{font-size:10px;color:var(--text3);display:flex;justify-content:space-between;margin-bottom:3px}
+
+/* ── REGISTER ── */
+.reg-wrap{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 52px)}
+.reg-left{padding:52px 48px;background:var(--bg2);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;border-right:1px solid var(--border)}
+.reg-glow{position:absolute;bottom:-60px;left:-60px;width:320px;height:320px;background:radial-gradient(ellipse,rgba(0,212,170,.08),transparent 70%);pointer-events:none}
+.reg-h{font-family:'Cabinet Grotesk',sans-serif;font-size:36px;font-weight:900;letter-spacing:-1.2px;line-height:1.08;margin-bottom:12px}
+.reg-sub{font-size:13px;color:var(--text2);margin-bottom:28px;line-height:1.72}
+.perk{display:flex;align-items:flex-start;gap:9px;margin-bottom:11px;font-size:13px;color:var(--text2)}
+.pk{width:17px;height:17px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;margin-top:1px;color:#07080f;font-weight:900}
+.reg-right{padding:52px 48px;display:flex;flex-direction:column;justify-content:center}
+.role-toggle{display:flex;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:18px;background:var(--bg2)}
+.role-btn{flex:1;padding:9px;font-size:12px;font-weight:700;border:none;background:transparent;color:var(--text2);transition:all .2s;cursor:pointer}
+.role-btn.on{background:var(--teal);color:#07080f}
+.conn-list{display:flex;flex-direction:column;gap:5px}
+.conn-item{display:flex;align-items:center;gap:9px;padding:9px 11px;border:1px solid var(--border);border-radius:var(--r);font-size:12px;background:var(--bg2);transition:all .2s;cursor:pointer}
+.conn-item:hover{border-color:var(--border2);background:var(--bg3)}
+.conn-item.done{border-color:rgba(0,212,170,.3);background:rgba(0,212,170,.04)}
+.conn-lbl{flex:1;font-weight:600;color:var(--text)}
+.conn-act{font-size:10px;font-weight:700;color:var(--teal);letter-spacing:.05em}
+.conn-item.done .conn-act{color:var(--teal)}
+
+/* ── CANDIDATE ── */
+.cand-layout{display:grid;grid-template-columns:258px 1fr;min-height:calc(100vh - 52px)}
+.cand-side{border-right:1px solid var(--border);padding:22px 16px;background:var(--bg2);display:flex;flex-direction:column;overflow-y:auto}
+.av{width:66px;height:66px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cabinet Grotesk',sans-serif;font-size:22px;font-weight:900;color:#fff;margin:0 auto 11px;position:relative}
+.av-ring{position:absolute;inset:-3px;border-radius:50%;border:1.5px solid var(--teal);opacity:.5;animation:spin 10s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cand-nm{font-family:'Cabinet Grotesk',sans-serif;font-size:17px;font-weight:900;text-align:center;letter-spacing:-.4px;margin-bottom:2px}
+.cand-ro{font-size:11px;color:var(--text2);text-align:center;margin-bottom:2px}
+.cand-lo{font-size:10px;color:var(--text3);text-align:center;margin-bottom:16px}
+.astrip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:14px}
+.ast{text-align:center;padding:9px 5px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border)}
+.ast-n{font-family:'Cabinet Grotesk',sans-serif;font-size:18px;font-weight:900;background:linear-gradient(135deg,var(--teal),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.ast-l{font-size:9px;color:var(--text3);margin-top:3px;letter-spacing:.04em}
+.score-block{text-align:center;padding:16px;background:linear-gradient(135deg,rgba(0,212,170,.08),rgba(77,159,255,.06));border:1px solid rgba(0,212,170,.16);border-radius:var(--r-lg);margin-bottom:14px}
+.score-n{font-family:'Cabinet Grotesk',sans-serif;font-size:46px;font-weight:900;background:linear-gradient(135deg,var(--teal),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;letter-spacing:-2px}
+.score-l{font-size:10px;color:var(--text2);margin-top:4px;letter-spacing:.04em}
+.ws{padding:11px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);margin-bottom:13px}
+.ws-t{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+.ws-row{display:flex;align-items:center;gap:6px;margin-bottom:5px}
+.ws-a{font-size:10px;color:var(--text3);width:62px;flex-shrink:0}
+.ws-track{flex:1;height:3px;background:var(--bg4);border-radius:2px;overflow:hidden}
+.ws-fill{height:100%;border-radius:2px}
+.ws-b{font-size:10px;color:var(--text3);width:62px;text-align:right}
+.plt-row{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;border-radius:var(--r);font-size:11px;cursor:pointer;transition:background .12s;border:1px solid transparent;margin-bottom:2px}
+.plt-row:hover{background:var(--bg3);border-color:var(--border)}
+.plt-l{display:flex;align-items:center;gap:7px;font-weight:600;color:var(--text2)}
+.dot-on{width:5px;height:5px;border-radius:50%;background:var(--teal);box-shadow:0 0 5px var(--teal)}
+.dot-off{width:5px;height:5px;border-radius:50%;background:var(--text3)}
+.url-row{display:flex;align-items:center;gap:7px;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);font-size:10px;color:var(--text2);margin-top:10px;cursor:pointer;transition:border-color .15s}
+.url-row:hover{border-color:rgba(0,212,170,.3)}
+.url-val{flex:1;font-family:'DM Mono',monospace;font-size:10px;color:var(--teal)}
+
+/* ── ANALYSIS CARDS ── */
+.ac{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-xl);padding:16px;margin-bottom:10px;transition:border-color .18s}
+.ac:hover{border-color:var(--border2)}
+.ac-hd{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.ac-title{font-size:13px;font-weight:700;flex:1}
+.ac-cnt{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
+.quote{font-size:13px;font-style:italic;color:var(--text2);line-height:1.65;padding:12px 14px;background:var(--bg3);border-radius:var(--r-lg);border-left:2px solid var(--teal);margin-bottom:10px}
+.q-src{font-size:10px;color:var(--text3);margin-top:5px;font-style:normal;font-family:'DM Mono',monospace}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{padding:3px 9px;border-radius:6px;font-size:11px;font-weight:600;background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-family:'DM Mono',monospace}
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.sig-card{padding:13px;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--bg2)}
+.sig-type{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:8px;margin-bottom:8px;letter-spacing:.05em}
+.st-s{background:var(--teal-dim);color:var(--teal)}
+.st-g{background:var(--amber-dim);color:var(--amber)}
+.st-i{background:var(--blue-dim);color:var(--blue)}
+.sig-t{font-size:12px;font-weight:700;margin-bottom:4px}
+.sig-d{font-size:11px;color:var(--text2);line-height:1.5}
+.act-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.act-item:last-child{border-bottom:none}
+.act-dot{width:7px;height:7px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.act-t{font-size:12px;font-weight:500;margin-bottom:2px}
+.act-m{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
+
+/* ── RECRUITER ── */
+.side-layout{display:grid;grid-template-columns:215px 1fr;min-height:calc(100vh - 52px)}
+.sidebar{border-right:1px solid var(--border);padding:14px 9px;background:var(--bg2);display:flex;flex-direction:column;gap:1px}
+.sb-it{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--r);font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .15s;border:none;background:transparent;width:100%;text-align:left;letter-spacing:.01em}
+.sb-it:hover{background:var(--bg3);color:var(--text)}
+.sb-it.on{background:var(--teal);color:#07080f;box-shadow:0 0 14px var(--teal-glow)}
+.sb-sep{height:1px;background:var(--border);margin:5px 0}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:22px}
+.stat{padding:14px 16px;border:1px solid var(--border);border-radius:var(--r-xl);background:var(--bg2);transition:border-color .2s}
+.stat:hover{border-color:var(--border2)}
+.stat-n{font-family:'Cabinet Grotesk',sans-serif;font-size:32px;font-weight:900;letter-spacing:-1.5px;background:linear-gradient(135deg,var(--text),var(--text2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:3px}
+.stat-l{font-size:10px;color:var(--text3);letter-spacing:.04em}
+.stat-d{font-size:10px;color:var(--teal);margin-top:5px;font-weight:700}
+.jrow{display:flex;align-items:center;gap:11px;padding:14px 16px;border:1px solid var(--border);border-radius:var(--r-xl);background:var(--bg2);cursor:pointer;transition:all .18s;margin-bottom:7px}
+.jrow:hover{border-color:var(--border2);background:var(--bg3)}
+.ji{flex:1}
+.jt{font-size:13px;font-weight:700;margin-bottom:2px}
+.jm{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
+.jcnt{font-size:12px;font-weight:700;color:var(--text2)}
+.alert-bar{display:flex;align-items:center;gap:10px;padding:11px 14px;background:rgba(0,212,170,.06);border:1px solid rgba(0,212,170,.18);border-radius:var(--r-lg);margin-bottom:18px;font-size:12px}
+
+/* ── SHORTLIST ── */
+.sl-grid{display:grid;grid-template-columns:1fr 345px;gap:18px}
+.cc{border:1px solid var(--border);border-radius:var(--r-xl);padding:15px;cursor:pointer;transition:all .18s;background:var(--bg2);margin-bottom:7px}
+.cc:hover{border-color:var(--border2);background:var(--bg3)}
+.cc.sel{border-color:var(--teal);background:var(--bg3);box-shadow:0 0 24px var(--teal-glow)}
+.cc-hd{display:flex;align-items:flex-start;gap:11px;margin-bottom:10px}
+.cc-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cabinet Grotesk',sans-serif;font-size:13px;font-weight:900;color:#fff;flex-shrink:0}
+.cc-n{font-size:13px;font-weight:700;margin-bottom:2px}
+.cc-r{font-size:10px;color:var(--text2);font-family:'DM Mono',monospace}
+.mpct{font-family:'Cabinet Grotesk',sans-serif;font-size:22px;font-weight:900;background:linear-gradient(135deg,var(--teal),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.ml{font-size:9px;color:var(--text3);text-align:right;letter-spacing:.04em}
+.sp{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:8px;font-size:10px;background:var(--bg4);color:var(--text2);border:1px solid var(--border);margin:2px}
+.spd{width:4px;height:4px;border-radius:50%}
+.ai-snip{font-size:11px;color:var(--text2);line-height:1.6;padding:8px 11px;background:rgba(0,212,170,.05);border-radius:var(--r);border-left:2px solid var(--teal);margin-top:8px}
+.dp{border:1px solid var(--border);border-radius:var(--r-xl);padding:16px;background:var(--bg2);position:sticky;top:62px;max-height:calc(100vh - 80px);overflow-y:auto}
+.dp-score{text-align:center;padding:18px;background:linear-gradient(135deg,rgba(0,212,170,.08),rgba(77,159,255,.06));border:1px solid rgba(0,212,170,.14);border-radius:var(--r-lg);margin-bottom:14px}
+.dp-sn{font-family:'Cabinet Grotesk',sans-serif;font-size:52px;font-weight:900;background:linear-gradient(135deg,var(--teal),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;letter-spacing:-2px}
+.dp-sl{font-size:11px;color:var(--text2);margin-top:4px}
+.dim-row{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.dim-l{font-size:10px;color:var(--text2);width:108px;flex-shrink:0}
+.dim-trk{flex:1;height:3px;background:var(--bg4);border-radius:2px;overflow:hidden}
+.dim-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--teal),var(--blue));transition:width .35s ease}
+.dim-v{font-size:11px;font-weight:700;width:24px;text-align:right;color:var(--text2)}
+.refine{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r-lg);padding:13px;margin-bottom:14px}
+.refine-t{font-size:10px;font-weight:700;color:var(--teal);margin-bottom:11px;display:flex;align-items:center;gap:5px;letter-spacing:.05em;text-transform:uppercase}
+.sl-row{margin-bottom:9px}
+.sl-lbl{display:flex;justify-content:space-between;font-size:10px;color:var(--text2);margin-bottom:4px}
+.sl-lbl span:last-child{color:var(--teal);font-family:'DM Mono',monospace;font-weight:700}
+input[type=range]{width:100%;height:3px;-webkit-appearance:none;background:var(--bg4);border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--teal);cursor:pointer;box-shadow:0 0 8px var(--teal-glow)}
+
+/* ── POST JOB ── */
+.post-wrap{max-width:680px;margin:0 auto;padding:24px 24px 60px}
+.form-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ta{min-height:110px;resize:vertical;padding:10px 12px;border:1px solid var(--border);border-radius:var(--r);font-size:13px;width:100%;background:var(--bg2);color:var(--text);outline:none;transition:all .18s;line-height:1.5}
+.ta:focus{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-dim)}
+.hint{font-size:10px;color:var(--text3);margin-top:4px}
+.pc{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border:1px solid var(--border);border-radius:var(--r);font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;user-select:none;color:var(--text2);background:var(--bg2);margin:3px}
+.pc:hover{border-color:var(--border2);color:var(--text)}
+.pc.on{background:var(--teal);color:#07080f;border-color:var(--teal);box-shadow:0 0 10px var(--teal-glow)}
+.ai-prev{border:1px solid rgba(0,212,170,.2);border-radius:var(--r-lg);padding:14px;background:rgba(0,212,170,.03);margin-top:14px}
+.ai-prev-t{font-size:10px;font-weight:700;color:var(--teal);margin-bottom:8px;letter-spacing:.06em;text-transform:uppercase}
+.ai-prev-b{font-size:12px;color:var(--text2);line-height:1.65}
+.ai-prev-b strong{color:var(--text);font-weight:700}
+
+/* ── AI CHAT ── */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 52px)}
+.chat-hd{padding:13px 18px;border-bottom:1px solid var(--border);background:var(--bg2);display:flex;align-items:center;gap:11px}
+.chat-av{width:32px;height:32px;background:linear-gradient(135deg,var(--teal),var(--blue));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 0 14px var(--teal-glow)}
+.chat-msgs{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;background:var(--bg)}
+.msg{max-width:76%;padding:11px 14px;border-radius:13px;font-size:13px;line-height:1.65}
+.msg-user{background:var(--teal);color:#07080f;align-self:flex-end;border-radius:13px 13px 3px 13px;font-weight:600}
+.msg-ai{background:var(--bg2);border:1px solid var(--border);align-self:flex-start;border-radius:3px 13px 13px 13px}
+.msg-loading{display:flex;gap:4px;align-items:center;padding:12px 14px}
+.ld{width:6px;height:6px;border-radius:50%;background:var(--text3);animation:ld 1.2s ease-in-out infinite}
+.ld:nth-child(2){animation-delay:.2s}.ld:nth-child(3){animation-delay:.4s}
+@keyframes ld{0%,100%{opacity:.3;transform:scale(.7)}50%{opacity:1;transform:scale(1)}}
+.chat-inp-area{padding:12px 18px;border-top:1px solid var(--border);background:var(--bg2);display:flex;gap:9px}
+.chat-inp{flex:1;padding:9px 14px;border:1px solid var(--border);border-radius:11px;font-size:13px;background:var(--bg3);color:var(--text);outline:none;transition:all .18s}
+.chat-inp:focus{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-dim)}
+.chat-send{padding:9px 18px;border-radius:11px;background:var(--teal);color:#07080f;border:none;font-size:13px;font-weight:800;cursor:pointer;transition:all .18s}
+.chat-send:hover{background:#00ebb8}
+.chat-send:disabled{opacity:.4;cursor:not-allowed}
+.sl-trigger{background:rgba(0,212,170,.06);border:1px solid rgba(0,212,170,.16);border-radius:var(--r-lg);padding:11px 14px;font-size:12px;color:var(--teal);cursor:pointer;text-align:left;font-weight:700;transition:all .18s;display:flex;align-items:center;gap:7px;margin-top:4px}
+.sl-trigger:hover{background:rgba(0,212,170,.11);border-color:rgba(0,212,170,.28)}
+.lbar{height:2px;background:linear-gradient(90deg,var(--teal),var(--blue),transparent);border-radius:1px;animation:lb 1.5s ease-in-out infinite;flex:1}
+@keyframes lb{0%{width:0;opacity:1}70%{width:100%;opacity:1}100%{width:100%;opacity:0}}
+
+/* ── PUBLIC PROFILE ── */
+.pub-wrap{max-width:680px;margin:0 auto;padding:48px 24px}
+.pub-av{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#2d1b6e,var(--teal));display:flex;align-items:center;justify-content:center;font-family:'Cabinet Grotesk',sans-serif;font-size:26px;font-weight:900;color:#fff;margin:0 auto 14px;position:relative}
+.pub-ring{position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--teal);opacity:.4;animation:spin 10s linear infinite}
+.pub-name{font-family:'Cabinet Grotesk',sans-serif;font-size:28px;font-weight:900;letter-spacing:-.7px;text-align:center;margin-bottom:4px}
+.pub-role{font-size:13px;color:var(--text2);text-align:center;margin-bottom:18px}
+.pub-score-bar{display:inline-flex;align-items:center;gap:16px;background:var(--bg2);border:1px solid rgba(0,212,170,.2);border-radius:14px;padding:10px 20px;margin-bottom:20px}
+.pub-sn{font-family:'Cabinet Grotesk',sans-serif;font-size:30px;font-weight:900;background:linear-gradient(135deg,var(--teal),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.pub-plts{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.pub-plt{display:flex;align-items:center;gap:5px;padding:5px 11px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;font-size:11px;font-weight:600;color:var(--text2)}
+.pub-url{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 16px;background:var(--bg2);border:1px dashed rgba(0,212,170,.25);border-radius:10px;font-size:11px;color:var(--text3);margin-bottom:32px;cursor:pointer;transition:border-color .15s}
+.pub-url:hover{border-color:rgba(0,212,170,.5)}
+.pub-url span{color:var(--teal);font-family:'DM Mono',monospace}
+
+/* ── TABLET (max 1024px) ── */
+@media (max-width:1024px){
+  .feat-grid{grid-template-columns:repeat(2,1fr)}
+  .hv-body{grid-template-columns:1fr 1fr}
+  .hv-body>div:last-child{display:none}
+  .reg-wrap{grid-template-columns:1fr}
+  .reg-left{display:none}
+  .reg-right{padding:36px 32px}
+  .cand-layout{grid-template-columns:220px 1fr}
+  .side-layout{grid-template-columns:180px 1fr}
+  .sl-grid{grid-template-columns:1fr 280px}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .sig-grid{grid-template-columns:1fr 1fr}
+  .pub-score-bar{flex-wrap:wrap;gap:10px}
+  .nav-pills{max-width:420px}
+  .land-h1{font-size:44px;letter-spacing:-1.5px}
+  .form-row2{grid-template-columns:1fr}
+}
+
+/* ── MOBILE (max 768px) ── */
+@media (max-width:768px){
+  /* Nav — hamburger style */
+  .nav{padding:0 14px;height:52px;gap:8px}
+  .nav-r .btn-g{display:none}
+  .nav-r .btn-t{padding:6px 12px;font-size:12px}
+  .nav-pills{max-width:none;flex:1;border-radius:8px}
+  .np{padding:5px 10px;font-size:11px}
+  .logo-name{font-size:16px}
+  .logo-mark{width:24px;height:24px}
+
+  /* Landing */
+  .land-in{padding:28px 16px 32px}
+  .land-h1{font-size:30px;letter-spacing:-.8px;line-height:1.08;margin-bottom:10px}
+  .land-tagline{font-size:15px;margin-bottom:12px}
+  .land-sub{font-size:13px;margin-bottom:20px;max-width:100%}
+  .land-ctas{flex-direction:column;gap:10px;margin-bottom:28px;align-items:stretch}
+  .land-ctas .btn-lg{width:100%;text-align:center;justify-content:center;display:block;padding:13px}
+  .land-ctas .divider{display:none}
+  .plt-row-land{gap:5px;margin-bottom:28px}
+  .plt-chip{font-size:11px;padding:6px 10px;gap:6px}
+  .feat-grid{grid-template-columns:1fr;border-radius:14px;margin-bottom:28px}
+  .feat{padding:16px}
+  .hero-visual{display:none}
+  .eyebrow{font-size:9px;padding:4px 11px}
+  .slbl{font-size:9px}
+
+  /* Register */
+  .reg-wrap{grid-template-columns:1fr;min-height:auto}
+  .reg-left{display:none}
+  .reg-right{padding:24px 18px;justify-content:flex-start;padding-top:32px}
+  .conn-list{gap:6px}
+  .conn-item{padding:10px 12px}
+
+  /* Candidate — sidebar stacks above content */
+  .cand-layout{grid-template-columns:1fr;min-height:auto}
+  .cand-side{border-right:none;border-bottom:1px solid var(--border);padding:16px 14px}
+  .av{width:54px;height:54px;font-size:18px;margin-bottom:10px}
+  .cand-nm{font-size:16px}
+  .cand-ro{font-size:11px}
+  .cand-lo{font-size:10px;margin-bottom:12px}
+  .astrip{grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
+  .ast{padding:8px 5px}
+  .ast-n{font-size:16px}
+  .score-block{padding:12px;margin-bottom:12px}
+  .score-n{font-size:38px}
+  .score-l{font-size:10px}
+  .ws{display:none}
+  .plt-row{padding:6px 8px}
+  .plt-l{font-size:11px}
+  .url-row{margin-top:10px;font-size:10px}
+  .main{padding:16px 14px}
+  .pt{font-size:18px;letter-spacing:-.3px}
+  .ps{font-size:11px}
+  .ph{flex-direction:column;gap:10px;margin-bottom:16px}
+  .ph .btn-g{align-self:flex-start}
+  .sig-grid{grid-template-columns:1fr}
+  .sig-card{padding:12px}
+  .ac{padding:13px;border-radius:14px;margin-bottom:8px}
+  .ac-hd{gap:7px;margin-bottom:10px}
+  .quote{font-size:12px;padding:10px 12px;line-height:1.55}
+  .tag{font-size:10px;padding:2px 7px}
+  .act-item{padding:8px 0}
+  .act-t{font-size:11px}
+  .act-m{font-size:10px}
+
+  /* Recruiter — sidebar becomes horizontal scrollable top bar */
+  .side-layout{grid-template-columns:1fr;min-height:auto}
+  .sidebar{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--border);padding:8px 10px;gap:3px;height:auto;min-height:auto}
+  .sidebar>div[style]{display:none}
+  .sb-sep{display:none}
+  .sb-it{white-space:nowrap;flex-shrink:0;padding:6px 11px;font-size:11px;border-radius:8px}
+  .sidebar::-webkit-scrollbar{display:none}
+  .stats-row{grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+  .stat{padding:12px 14px;border-radius:14px}
+  .stat-n{font-size:26px}
+  .stat-l{font-size:10px}
+  .stat-d{font-size:10px;margin-top:4px}
+  .jrow{flex-wrap:wrap;gap:7px;padding:12px 13px;border-radius:14px}
+  .jrow .badge{font-size:9px}
+  .jcnt{display:none}
+  .jt{font-size:12px}
+  .jm{font-size:10px}
+  .alert-bar{font-size:11px;padding:10px 12px;border-radius:12px;margin-bottom:14px}
+
+  /* Shortlist — panels stack vertically */
+  .sl-grid{grid-template-columns:1fr;gap:14px}
+  .dp{position:static;border-radius:14px}
+  .dp-score{padding:14px;border-radius:12px}
+  .dp-sn{font-size:40px}
+  .refine{padding:12px;border-radius:12px}
+  .refine-t{font-size:10px}
+  .sl-row{margin-bottom:8px}
+  .cc{border-radius:14px;padding:14px}
+  .cc-n{font-size:12px}
+  .cc-r{font-size:10px}
+  .mpct{font-size:20px}
+  .ai-snip{font-size:11px;padding:8px 10px}
+  .sp{font-size:10px;padding:2px 7px}
+
+  /* Post job */
+  .post-wrap{padding:16px 14px 40px;max-width:100%}
+  .form-row2{grid-template-columns:1fr;gap:10px}
+  .ta{min-height:100px}
+  .ai-prev{padding:12px}
+  .ai-prev-t{font-size:10px}
+  .ai-prev-b{font-size:12px}
+  .pc{font-size:11px;padding:5px 10px}
+
+  /* Public profile */
+  .pub-wrap{padding:24px 14px}
+  .pub-av{width:64px;height:64px;font-size:22px}
+  .pub-name{font-size:20px}
+  .pub-role{font-size:12px;margin-bottom:12px}
+  .pub-score-bar{flex-direction:column;gap:6px;padding:12px 14px;width:100%;max-width:280px}
+  .pub-score-bar>div[style*="width:1px"]{display:none}
+  .pub-plts{gap:5px}
+  .pub-plt{font-size:10px;padding:4px 8px}
+  .pub-url{font-size:10px;padding:7px 12px;margin-bottom:20px}
+  .pub-sn{font-size:24px}
+
+  /* AI Chat */
+  .chat-wrap{height:calc(100vh - 52px)}
+  .chat-hd{padding:11px 14px;gap:9px}
+  .chat-av{width:28px;height:28px;font-size:13px;border-radius:7px}
+  .chat-msgs{padding:12px;gap:10px}
+  .msg{max-width:92%;font-size:12px;padding:10px 12px;border-radius:12px}
+  .chat-inp-area{padding:10px 12px;gap:8px}
+  .chat-inp{padding:10px 12px;font-size:13px;border-radius:10px}
+  .chat-send{padding:10px 14px;font-size:12px;border-radius:10px}
+  .sl-trigger{font-size:11px;padding:10px 12px;border-radius:10px}
+
+  /* Card & misc */
+  .card{padding:12px;border-radius:14px}
+  .badge{font-size:9px;padding:2px 7px}
+  .back{font-size:11px;margin-bottom:10px}
+}
+
+/* ── SMALL MOBILE (max 420px) ── */
+@media (max-width:420px){
+  .land-h1{font-size:26px;letter-spacing:-.5px}
+  .land-tagline{font-size:13px}
+  .land-sub{font-size:12px}
+  .np{padding:4px 8px;font-size:10px}
+  .plt-chip{font-size:10px;padding:5px 8px}
+  .btn-lg{padding:12px 16px;font-size:13px}
+  .nav-r .btn-t{padding:5px 10px;font-size:11px}
+  .logo-name{font-size:14px}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .stat-n{font-size:22px}
+  .land-in{padding:22px 14px 26px}
+  .eyebrow{font-size:8px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="logo" onclick="go('landing')">
+    <div class="logo-mark">
+      <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="15" cy="22" r="4" fill="#00d4aa"/>
+        <circle cx="15" cy="22" r="8" stroke="#00d4aa" stroke-width="1" stroke-dasharray="2 3" opacity=".4"/>
+        <line x1="15" y1="18" x2="15" y2="6" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="15" cy="5" r="2.5" fill="#4d9fff"/>
+        <line x1="15" y1="18" x2="7" y2="11" stroke="#00d4aa" stroke-width="1" stroke-linecap="round" opacity=".5"/>
+        <circle cx="6.5" cy="10.5" r="1.8" fill="#00d4aa" opacity=".6"/>
+        <line x1="15" y1="18" x2="23" y2="11" stroke="#00d4aa" stroke-width="1" stroke-linecap="round" opacity=".5"/>
+        <circle cx="23.5" cy="10.5" r="1.8" fill="#00d4aa" opacity=".6"/>
+      </svg>
+    </div>
+    <div class="logo-name">Sur<span>faced</span></div>
+  </div>
+  <div class="nav-pills">
+    <button class="np on" onclick="go('landing')">Home</button>
+    <button class="np" onclick="go('register')">Sign up</button>
+    <button class="np" onclick="go('candidate')">Candidate</button>
+    <button class="np" onclick="go('public')">Public profile</button>
+    <button class="np" onclick="go('recruiter')">Recruiter</button>
+    <button class="np" onclick="go('shortlist')">AI Shortlist</button>
+    <button class="np" onclick="go('postjob')">Post a job</button>
+    <button class="np" onclick="go('aichat')">AI Chat</button>
+  </div>
+  <div class="nav-r">
+    <button class="btn btn-g" onclick="go('register')">Log in</button>
+    <button class="btn btn-t" onclick="go('register')">Get started →</button>
+  </div>
+</div>
+
+<!-- ===== LANDING ===== -->
+<div class="page on" id="page-landing">
+<div class="land">
+  <div class="land-noise"></div>
+  <div class="land-glow1"></div>
+  <div class="land-glow2"></div>
+  <div class="land-in">
+    <div class="eyebrow">Potential-first recruitment</div>
+    <h1 class="land-h1">The talent was always there.<br>Now it's <span class="surface">Surfaced.</span></h1>
+    <p class="land-tagline">Stop reading CVs. Start reading signals.</p>
+    <p class="land-sub">Surfaced analyses what engineers build, write and discuss publicly across 7 platforms — then uses AI to match thinking styles with the right teams. No résumé. No background bias. No guesswork.</p>
+    <div class="land-ctas">
+      <button class="btn btn-lg btn-t" onclick="go('register')">I'm a candidate →</button>
+      <div class="divider">or</div>
+      <button class="btn btn-lg btn-outline" onclick="go('register')">I'm hiring</button>
+    </div>
+
+    <!-- mini hero visual -->
+    <div class="hero-visual">
+      <div class="hv-bar">
+        <div class="hv-dot" style="background:#ff5f56"></div>
+        <div class="hv-dot" style="background:#ffbd2e"></div>
+        <div class="hv-dot" style="background:#27c93f"></div>
+        <div class="hv-url">surfaced.io/shortlist/senior-fullstack</div>
+      </div>
+      <div class="hv-body">
+        <div class="hv-card">
+          <div class="hv-card-title"><div class="av" style="width:22px;height:22px;font-size:9px;background:linear-gradient(135deg,#4f46e5,#7c6fff);border-radius:50%;flex-shrink:0">AB</div> Abdel Benali</div>
+          <div class="hv-score">92%</div>
+          <div style="font-size:10px;color:var(--text3);margin:6px 0 10px">match score</div>
+          <div class="hv-dim-lbl"><span>Tech skills</span><span>95</span></div><div class="hv-mini-bar"><div class="hv-mini-fill" style="width:95%"></div></div>
+          <div class="hv-dim-lbl"><span>Communication</span><span>90</span></div><div class="hv-mini-bar"><div class="hv-mini-fill" style="width:90%"></div></div>
+          <div class="hv-dim-lbl"><span>Curiosity</span><span>85</span></div><div class="hv-mini-bar"><div class="hv-mini-fill" style="width:85%"></div></div>
+        </div>
+        <div class="hv-card">
+          <div class="hv-card-title">📡 Signals detected</div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
+            <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2)"><div class="plt plt-sm" style="background:#1a1a1a">GH</div>1,240 commits · disciplined</div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2)"><div class="plt plt-sm" style="background:#f48024">SO</div>Top 8% · 89 answers</div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2)"><div class="plt plt-sm" style="background:#1c1c1c">M</div>12 technical articles</div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2)"><div class="plt plt-sm" style="background:#ff4500">R</div>200+ comments · r/webdev</div>
+          </div>
+        </div>
+        <div class="hv-card">
+          <div class="hv-card-title">✦ AI justification</div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.6;font-style:italic;margin-top:4px">"His commit discipline and pedagogical SO answers match precisely the profile you described. Exceptional cross-platform consistency."</div>
+          <div style="margin-top:12px;display:flex;gap:6px">
+            <div class="badge b-teal">Builder</div>
+            <div class="badge b-blue">Pedagogue</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slbl" style="margin-top:48px">Analysed platforms</div>
+    <div class="plt-row-land">
+      <div class="plt-chip"><div class="plt" style="background:#1a1a1a">GH</div>GitHub <span class="badge b-teal" style="font-size:9px">Core</span></div>
+      <div class="plt-chip"><div class="plt" style="background:#f48024">SO</div>Stack Overflow</div>
+      <div class="plt-chip"><div class="plt" style="background:#0077b5">in</div>LinkedIn</div>
+      <div class="plt-chip"><div class="plt" style="background:#1c1c1c">M</div>Medium / Dev.to</div>
+      <div class="plt-chip"><div class="plt" style="background:#ff4500">R</div>Reddit</div>
+      <div class="plt-chip"><div class="plt" style="background:#20beff">K</div>Kaggle</div>
+      <div class="plt-chip"><div class="plt" style="background:#cb3837">npm</div>npm / PyPI</div>
+    </div>
+    <div class="feat-grid">
+      <div class="feat"><div class="feat-ico">⬡</div><div class="feat-t">GitHub deep analysis</div><div class="feat-d">Commit messages, README quality, code review style, OSS contributions. How you build is how you think.</div></div>
+      <div class="feat"><div class="feat-ico">◎</div><div class="feat-t">360° signal profile</div><div class="feat-d">7 platforms analysed together. A fuller picture than any CV or portfolio could ever be.</div></div>
+      <div class="feat"><div class="feat-ico">⟁</div><div class="feat-t">Work style detection <span class="feat-new">NEW</span></div><div class="feat-d">Builder vs. collaborator. Generalist vs. specialist. Detected from behaviour, not self-declaration.</div></div>
+      <div class="feat"><div class="feat-ico">✦</div><div class="feat-t">Adjustable shortlists <span class="feat-new">NEW</span></div><div class="feat-d">Weight communication vs. depth. Seniority vs. growth potential. Regenerate instantly with AI.</div></div>
+      <div class="feat"><div class="feat-ico">⊙</div><div class="feat-t">Public profile link <span class="feat-new">NEW</span></div><div class="feat-d">surfaced.io/you — replaces the CV link in your GitHub bio, LinkedIn, anywhere.</div></div>
+      <div class="feat"><div class="feat-ico">◈</div><div class="feat-t">Live activity signals <span class="feat-new">NEW</span></div><div class="feat-d">Recruiters are alerted when a matched candidate publishes something relevant. Right moment, right reach.</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===== REGISTER ===== -->
+<div class="page" id="page-register">
+<div class="reg-wrap">
+  <div class="reg-left">
+    <div class="reg-glow"></div>
+    <div class="logo" style="margin-bottom:36px"><div class="logo-mark"><svg viewBox="0 0 30 30" fill="none"><circle cx="15" cy="22" r="4" fill="#00d4aa"/><line x1="15" y1="18" x2="15" y2="6" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round"/><circle cx="15" cy="5" r="2.5" fill="#4d9fff"/><line x1="15" y1="18" x2="7" y2="11" stroke="#00d4aa" stroke-width="1" opacity=".5"/><circle cx="6.5" cy="10.5" r="1.8" fill="#00d4aa" opacity=".6"/><line x1="15" y1="18" x2="23" y2="11" stroke="#00d4aa" stroke-width="1" opacity=".5"/><circle cx="23.5" cy="10.5" r="1.8" fill="#00d4aa" opacity=".6"/></svg></div><div class="logo-name">Sur<span>faced</span></div></div>
+    <div class="reg-h">Great engineers don't apply.<br>We find them.</div>
+    <p class="reg-sub">The talent was always there. Surfaced brings it to the top.</p>
+    <div class="perk"><div class="pk">✓</div><div>7 platforms analysed — no self-declaration needed</div></div>
+    <div class="perk"><div class="pk">✓</div><div>Work style detected automatically from behaviour</div></div>
+    <div class="perk"><div class="pk">✓</div><div>Shareable profile at surfaced.io/you</div></div>
+    <div class="perk"><div class="pk">✓</div><div>Recruiters read your signals before reaching out</div></div>
+  </div>
+  <div class="reg-right">
+    <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:26px;font-weight:900;letter-spacing:-.6px;margin-bottom:4px">Create your account</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:20px">Choose your role to get started</div>
+    <div class="role-toggle">
+      <button class="role-btn on" id="rbtn-c" onclick="switchRole('c')">👤 Candidate</button>
+      <button class="role-btn" id="rbtn-r" onclick="switchRole('r')">🏢 Recruiter</button>
+    </div>
+    <div class="fld"><label class="lbl">Full name</label><input class="inp" type="text" placeholder="Your name"></div>
+    <div class="fld"><label class="lbl">Email</label><input class="inp" type="email" placeholder="you@example.com"></div>
+    <div class="fld"><label class="lbl">Password</label><input class="inp" type="password" placeholder="••••••••"></div>
+    <div id="reg-c">
+      <div class="sep"></div>
+      <div class="lbl" style="margin-bottom:7px">Connect your platforms</div>
+      <div class="conn-list">
+        <div class="conn-item" onclick="toggleConn(this)"><div class="plt plt-sm" style="background:#1a1a1a">GH</div><div class="conn-lbl">GitHub <span class="badge b-teal" style="font-size:9px">Recommended</span></div><div class="conn-act">CONNECT</div></div>
+        <div class="conn-item" onclick="toggleConn(this)"><div class="plt plt-sm" style="background:#f48024">SO</div><div class="conn-lbl">Stack Overflow</div><div class="conn-act">CONNECT</div></div>
+        <div class="conn-item" onclick="toggleConn(this)"><div class="plt plt-sm" style="background:#0077b5">in</div><div class="conn-lbl">LinkedIn</div><div class="conn-act">CONNECT</div></div>
+        <div class="conn-item" onclick="toggleConn(this)"><div class="plt plt-sm" style="background:#1c1c1c">M</div><div class="conn-lbl">Medium / Dev.to</div><div class="conn-act">CONNECT</div></div>
+        <div class="conn-item" onclick="toggleConn(this)"><div class="plt plt-sm" style="background:#ff4500">R</div><div class="conn-lbl">Reddit</div><div class="conn-act">CONNECT</div></div>
+        <div class="conn-item" onclick="toggleConn(this)"><div class="plt plt-sm" style="background:#20beff">K</div><div class="conn-lbl">Kaggle</div><div class="conn-act">CONNECT</div></div>
+        <div class="conn-item" onclick="toggleConn(this)"><div class="plt plt-sm" style="background:#cb3837;font-size:7px">npm</div><div class="conn-lbl">npm / PyPI</div><div class="conn-act">CONNECT</div></div>
+      </div>
+    </div>
+    <div id="reg-r" style="display:none">
+      <div class="sep"></div>
+      <div class="fld"><label class="lbl">Company</label><input class="inp" type="text" placeholder="Acme Corp"></div>
+      <div class="fld"><label class="lbl">Team size</label><select class="inp"><option>1–10</option><option>10–50</option><option>50–200</option><option>200+</option></select></div>
+    </div>
+    <button class="btn btn-lg btn-t" style="width:100%;margin-top:14px" onclick="go('candidate')">Create account →</button>
+  </div>
+</div>
+</div>
+
+<!-- ===== CANDIDATE ===== -->
+<div class="page" id="page-candidate">
+<div class="cand-layout">
+  <div class="cand-side">
+    <div class="av" style="background:linear-gradient(135deg,#2d1b6e,#00d4aa)">AB<div class="av-ring"></div></div>
+    <div class="cand-nm">Abdel Benali</div>
+    <div class="cand-ro">Full-stack · Open source</div>
+    <div class="cand-lo">📍 Algiers, Algeria</div>
+    <div class="astrip">
+      <div class="ast"><div class="ast-n">34</div><div class="ast-l">Views</div></div>
+      <div class="ast"><div class="ast-n">6</div><div class="ast-l">Shortlisted</div></div>
+      <div class="ast"><div class="ast-n">2</div><div class="ast-l">Contacted</div></div>
+    </div>
+    <div class="score-block"><div class="score-n">87</div><div class="score-l">Potential score / 100</div></div>
+    <div class="ws">
+      <div class="ws-t">Work style</div>
+      <div class="ws-row"><div class="ws-a">Builder</div><div class="ws-track"><div class="ws-fill" style="width:78%;background:linear-gradient(90deg,var(--teal),var(--blue))"></div></div><div class="ws-b">Collaborator</div></div>
+      <div class="ws-row"><div class="ws-a">Generalist</div><div class="ws-track"><div class="ws-fill" style="width:42%;background:linear-gradient(90deg,var(--blue),var(--purple))"></div></div><div class="ws-b">Specialist</div></div>
+      <div class="ws-row"><div class="ws-a">Solo</div><div class="ws-track"><div class="ws-fill" style="width:38%;background:linear-gradient(90deg,var(--teal),var(--blue))"></div></div><div class="ws-b">Team player</div></div>
+    </div>
+    <div class="slbl">Platforms</div>
+    <div class="plt-row"><div class="plt-l"><div class="plt plt-sm" style="background:#1a1a1a">GH</div>GitHub</div><div class="dot-on"></div></div>
+    <div class="plt-row"><div class="plt-l"><div class="plt plt-sm" style="background:#f48024">SO</div>Stack Overflow</div><div class="dot-on"></div></div>
+    <div class="plt-row"><div class="plt-l"><div class="plt plt-sm" style="background:#0077b5">in</div>LinkedIn</div><div class="dot-on"></div></div>
+    <div class="plt-row"><div class="plt-l"><div class="plt plt-sm" style="background:#1c1c1c">M</div>Medium</div><div class="dot-on"></div></div>
+    <div class="plt-row"><div class="plt-l"><div class="plt plt-sm" style="background:#ff4500">R</div>Reddit</div><div class="dot-on"></div></div>
+    <div class="plt-row"><div class="plt-l"><div class="plt plt-sm" style="background:#20beff">K</div>Kaggle</div><div class="dot-off"></div></div>
+    <div class="plt-row"><div class="plt-l"><div class="plt plt-sm" style="background:#cb3837;font-size:8px">npm</div>npm / PyPI</div><div class="dot-off"></div></div>
+    <div class="url-row" onclick="go('public')">🔗 <div class="url-val">surfaced.io/abdel-benali</div><span style="font-size:10px;color:var(--text3)">Share →</span></div>
+    <div style="margin-top:8px"><button class="btn btn-t" style="width:100%;font-size:11px;padding:8px" onclick="go('aichat')">✦ Ask AI about my profile</button></div>
+  </div>
+  <div class="main">
+    <div class="ph"><div><div class="pt">My AI Profile</div><div class="ps">Last analysed: 29 March 2026 · Auto-updated every 48h</div></div><button class="btn btn-g" style="font-size:11px" onclick="go('recruiter')">View as recruiter</button></div>
+    <div class="ac" style="border-color:rgba(0,212,170,.18)">
+      <div class="ac-hd"><div class="plt" style="background:#1a1a1a">GH</div><div class="ac-title">GitHub</div><span class="badge b-teal">Core signal</span><div class="ac-cnt" style="margin-left:auto">143 repos · 1,240 commits</div></div>
+      <div class="quote">"Commit messages demonstrate uncommon discipline — context, reason, impact. READMEs are written for an external reader, not the author. Code review comments are constructive and specific."<div class="q-src">— Surfaced AI · 143 public repos analysed</div></div>
+      <div class="tags"><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span><span class="tag">CI/CD</span></div>
+    </div>
+    <div class="ac">
+      <div class="ac-hd"><div class="plt" style="background:#f48024">SO</div><div class="ac-title">Stack Overflow</div><span class="badge b-teal">Top 8%</span><div class="ac-cnt" style="margin-left:auto">4,230 rep · 89 answers</div></div>
+      <div class="quote">"Answers consistently rely on reproducible examples. Upvote-to-answer ratio top 8% of active contributors. Strong pedagogical approach detected across multiple domains."<div class="q-src">— Surfaced AI · 89 answers analysed</div></div>
+    </div>
+    <div class="ac">
+      <div class="ac-hd"><div class="plt" style="background:#1c1c1c">M</div><div class="ac-title">Medium / Dev.to</div><span class="badge b-blue">12 articles</span></div>
+      <div class="quote">"Technical-to-product articles demonstrate ability to articulate complex problems for a non-technical audience. Direct, without superfluous jargon."<div class="q-src">— Surfaced AI · 12 articles analysed</div></div>
+    </div>
+    <div class="ac">
+      <div class="ac-hd"><div class="plt" style="background:#ff4500">R</div><div class="ac-title">Reddit</div><span class="badge b-amber">3yr · 200+ comments</span></div>
+      <div class="quote">"Active contributor for 3 years. Helps beginners without condescension. Consistent intellectual curiosity with zero self-promotion detected."<div class="q-src">— Surfaced AI · r/webdev, r/programming</div></div>
+    </div>
+    <div class="slbl" style="margin-top:8px">Potential signals</div>
+    <div class="sig-grid">
+      <div class="sig-card"><div class="sig-type st-s">Strength</div><div class="sig-t">Technical communication</div><div class="sig-d">Multi-depth explanations across platforms. Rare in cross-functional teams.</div></div>
+      <div class="sig-card"><div class="sig-type st-s">Strength</div><div class="sig-t">Code discipline</div><div class="sig-d">Commit hygiene consistent across 3+ years. Senior mindset regardless of title.</div></div>
+      <div class="sig-card"><div class="sig-type st-g">Growing</div><div class="sig-t">Systems architecture</div><div class="sig-d">Complex patterns emerging over 18 months. Senior potential not yet fully explored.</div></div>
+      <div class="sig-card"><div class="sig-type st-i">Signal</div><div class="sig-t">Community engagement</div><div class="sig-d">Consistent giving-back without self-promotion. Strong collaborative signal.</div></div>
+    </div>
+    <div class="slbl" style="margin-top:14px">Recent activity</div>
+    <div class="card" style="padding:14px">
+      <div class="act-item"><div class="act-dot" style="background:var(--teal)"></div><div><div class="act-t">Merged PR on <strong>react-query</strong> — TypeScript generics</div><div class="act-m">GitHub · 2 days ago</div></div></div>
+      <div class="act-item"><div class="act-dot" style="background:var(--blue)"></div><div><div class="act-t">Answered "PostgreSQL vs MongoDB for real-time" — <strong>47 upvotes</strong></div><div class="act-m">Stack Overflow · 4 days ago</div></div></div>
+      <div class="act-item"><div class="act-dot" style="background:var(--purple)"></div><div><div class="act-t">Published: <strong>"Why I stopped using ORMs for complex queries"</strong></div><div class="act-m">Medium · 1 week ago</div></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===== PUBLIC PROFILE ===== -->
+<div class="page" id="page-public">
+<div class="pub-wrap">
+  <button class="back" style="display:block;margin:0 auto 20px" onclick="go('candidate')">← Back to my profile</button>
+  <div style="text-align:center">
+    <div class="pub-av">AB<div class="pub-ring"></div></div>
+    <div class="pub-name">Abdel Benali</div>
+    <div class="pub-role">Full-stack developer · Open source · Algiers</div>
+    <div style="display:flex;justify-content:center;margin-bottom:18px">
+      <div class="pub-score-bar">
+        <div><div class="pub-sn">87</div><div style="font-size:10px;color:var(--text3);margin-top:2px">Potential score</div></div>
+        <div style="width:1px;height:36px;background:var(--border)"></div>
+        <div style="font-size:12px;color:var(--text2);text-align:left;line-height:1.6">TypeScript · React<br>Node.js · PostgreSQL</div>
+        <div style="width:1px;height:36px;background:var(--border)"></div>
+        <div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:20px;font-weight:900;color:var(--teal)">34</div><div style="font-size:10px;color:var(--text3);margin-top:2px">Profile views</div></div>
+      </div>
+    </div>
+    <div class="pub-plts">
+      <div class="pub-plt"><div class="plt plt-sm" style="background:#1a1a1a">GH</div>GitHub</div>
+      <div class="pub-plt"><div class="plt plt-sm" style="background:#f48024">SO</div>Stack Overflow</div>
+      <div class="pub-plt"><div class="plt plt-sm" style="background:#1c1c1c">M</div>Medium</div>
+      <div class="pub-plt"><div class="plt plt-sm" style="background:#ff4500">R</div>Reddit</div>
+      <div class="pub-plt"><div class="plt plt-sm" style="background:#0077b5">in</div>LinkedIn</div>
+    </div>
+    <div class="pub-url" onclick="navigator.clipboard?.writeText('https://surfaced.io/abdel-benali')">🔗 Share: <span>surfaced.io/abdel-benali</span> · Click to copy</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div class="ac"><div class="ac-hd"><span class="badge b-teal">Strength</span><div class="ac-title">Technical communication</div></div><div style="font-size:12px;color:var(--text2);line-height:1.6">Explains complex concepts at multiple depth levels. Detected across Stack Overflow and Medium. Rare and valuable in cross-functional teams.</div></div>
+    <div class="ac"><div class="ac-hd"><span class="badge b-teal">Strength</span><div class="ac-title">Code discipline & documentation</div></div><div style="font-size:12px;color:var(--text2);line-height:1.6">High consistency in commit quality and README quality across 3+ years of public GitHub history.</div></div>
+    <div class="ac"><div class="ac-hd"><span class="badge b-amber">Growing</span><div class="ac-title">Systems architecture</div></div><div style="font-size:12px;color:var(--text2);line-height:1.6">Progression towards more complex architectural patterns over the last 18 months. Senior potential not yet fully explored.</div></div>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+    <button class="btn btn-lg btn-t" onclick="go('register')">Contact on Surfaced</button>
+    <button class="btn btn-lg btn-outline" onclick="go('register')">I'm a recruiter — view full profile</button>
+  </div>
+</div>
+</div>
+
+<!-- ===== RECRUITER ===== -->
+<div class="page" id="page-recruiter">
+<div class="side-layout">
+  <div class="sidebar">
+    <div class="logo" style="padding:0 9px;margin-bottom:14px;cursor:pointer" onclick="go('landing')"><div class="logo-mark" style="width:22px;height:22px"><svg viewBox="0 0 30 30" fill="none"><circle cx="15" cy="22" r="4" fill="#00d4aa"/><line x1="15" y1="18" x2="15" y2="6" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round"/><circle cx="15" cy="5" r="2.5" fill="#4d9fff"/><line x1="15" y1="18" x2="7" y2="11" stroke="#00d4aa" stroke-width="1" opacity=".5"/><circle cx="6.5" cy="10.5" r="1.8" fill="#00d4aa" opacity=".6"/><line x1="15" y1="18" x2="23" y2="11" stroke="#00d4aa" stroke-width="1" opacity=".5"/><circle cx="23.5" cy="10.5" r="1.8" fill="#00d4aa" opacity=".6"/></svg></div><div class="logo-name" style="font-size:14px">Sur<span>faced</span></div></div>
+    <button class="sb-it on">◈ Dashboard</button>
+    <button class="sb-it" onclick="go('postjob')">＋ New position</button>
+    <button class="sb-it" onclick="go('shortlist')">✦ AI Shortlists</button>
+    <button class="sb-it">◻ Candidates</button>
+    <button class="sb-it">→ ATS Pipeline</button>
+    <button class="sb-it" onclick="go('aichat')">💬 AI Assistant</button>
+    <div class="sb-sep"></div>
+    <button class="sb-it">◎ Settings</button>
+    <div style="flex:1"></div>
+    <div style="padding:9px 10px;font-size:10px;color:var(--text3);border-top:1px solid var(--border);margin-top:8px"><div style="font-weight:700;color:var(--text2);margin-bottom:2px">Acme Corp</div>Pro · 3 active roles</div>
+  </div>
+  <div class="main">
+    <div class="ph"><div><div class="pt">Dashboard</div><div class="ps">Hello Sonia — this week's activity</div></div><button class="btn btn-t btn-sm" onclick="go('postjob')">＋ New position</button></div>
+    <div class="alert-bar"><span style="font-size:16px">🔔</span><div style="flex:1;font-size:12px"><strong style="color:var(--teal)">Abdel Benali</strong> — matched to "Senior full-stack" — just answered 3 PostgreSQL questions on Stack Overflow this week</div><button class="btn btn-sm" style="background:var(--teal-dim);border-color:rgba(0,212,170,.25);color:var(--teal)" onclick="go('shortlist')">View →</button></div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n">3</div><div class="stat-l">Active positions</div><div class="stat-d">↑ +1 this week</div></div>
+      <div class="stat"><div class="stat-n">142</div><div class="stat-l">Candidates analysed</div><div class="stat-d">↑ +34 this week</div></div>
+      <div class="stat"><div class="stat-n">12</div><div class="stat-l">In shortlist</div><div class="stat-d">↑ +5 this week</div></div>
+      <div class="stat"><div class="stat-n">4</div><div class="stat-l">Interviews scheduled</div><div class="stat-d">↑ +2 this week</div></div>
+    </div>
+    <div class="slbl">Open positions</div>
+    <div class="jrow" onclick="go('shortlist')"><div class="ji"><div class="jt">Senior full-stack developer</div><div class="jm">5 days ago · Remote · Full-time</div></div><div class="jcnt">89</div><span class="badge b-teal">Open</span><span class="badge b-purple">✦ AI ready</span><button class="btn btn-t btn-sm" onclick="event.stopPropagation();go('shortlist')">Shortlist →</button></div>
+    <div class="jrow"><div class="ji"><div class="jt">Lead Product Designer</div><div class="jm">12 days ago · Algiers · Full-time</div></div><div class="jcnt">43</div><span class="badge b-amber">In review</span><span class="badge b-purple">✦ AI ready</span><button class="btn btn-sm">Shortlist →</button></div>
+    <div class="jrow" style="opacity:.45"><div class="ji"><div class="jt">Data Engineer</div><div class="jm">3 weeks ago · Remote</div></div><div class="jcnt">10</div><span class="badge b-gray">Closed</span><button class="btn btn-sm">Archived</button></div>
+  </div>
+</div>
+</div>
+
+<!-- ===== SHORTLIST ===== -->
+<div class="page" id="page-shortlist">
+<div class="main">
+  <button class="back" onclick="go('recruiter')">← Back to dashboard</button>
+  <div class="ph"><div><div class="pt">AI Shortlist</div><div class="ps">Senior full-stack developer · 89 analysed · 4 selected · Updated 2h ago</div></div><button class="btn btn-t btn-sm">Export</button></div>
+  <div class="sl-grid">
+    <div>
+      <div class="refine">
+        <div class="refine-t">⟁ Refine weights — regenerate shortlist</div>
+        <div class="sl-row"><div class="sl-lbl"><span>Technical depth</span><span id="sv1">70%</span></div><input type="range" min="0" max="100" value="70" oninput="document.getElementById('sv1').textContent=this.value+'%'"></div>
+        <div class="sl-row"><div class="sl-lbl"><span>Communication quality</span><span id="sv2">85%</span></div><input type="range" min="0" max="100" value="85" oninput="document.getElementById('sv2').textContent=this.value+'%'"></div>
+        <div class="sl-row"><div class="sl-lbl"><span>Community engagement</span><span id="sv3">60%</span></div><input type="range" min="0" max="100" value="60" oninput="document.getElementById('sv3').textContent=this.value+'%'"></div>
+        <div class="sl-row"><div class="sl-lbl"><span>GitHub activity</span><span id="sv4">75%</span></div><input type="range" min="0" max="100" value="75" oninput="document.getElementById('sv4').textContent=this.value+'%'"></div>
+        <button class="btn btn-t btn-sm" style="width:100%;margin-top:8px" onclick="go('aichat')">✦ Regenerate with these weights →</button>
+      </div>
+      <div class="slbl">Top candidates</div>
+      <div class="cc sel" onclick="selC(this,'Abdel Benali','92','Full-stack · TypeScript / React / Node.js','Commit discipline on GitHub and pedagogical Stack Overflow answers match precisely the communication and technical profile described. Consistent across 7 platforms.',95,90,88,85)">
+        <div class="cc-hd"><div class="cc-av" style="background:linear-gradient(135deg,#2d1b6e,#00d4aa)">AB</div><div style="flex:1"><div class="cc-n">Abdel Benali</div><div class="cc-r">Full-stack · TypeScript / React / Node.js</div></div><div><div class="mpct">92%</div><div class="ml">match</div></div></div>
+        <div><div class="sp"><div class="spd" style="background:#eee"></div>GitHub active</div><div class="sp"><div class="spd" style="background:var(--teal)"></div>SO top 8%</div><div class="sp"><div class="spd" style="background:var(--blue)"></div>Medium</div><div class="sp"><div class="spd" style="background:var(--amber)"></div>Reddit</div></div>
+        <div class="ai-snip">"His architectural explanations match exactly the pedagogical profile needed to onboard your junior team."</div>
+      </div>
+      <div class="cc" onclick="selC(this,'Meriem Ouali','88','Frontend · React / Vue / Design systems','OSS contributor to React ecosystem. Reddit posts show deep curiosity for architecture. GitHub shows strong component library work over 2 years.',88,92,75,90)">
+        <div class="cc-hd"><div class="cc-av" style="background:linear-gradient(135deg,#059669,#34d399)">MO</div><div style="flex:1"><div class="cc-n">Meriem Ouali</div><div class="cc-r">Frontend · React / Vue / Design systems</div></div><div><div class="mpct">88%</div><div class="ml">match</div></div></div>
+        <div><div class="sp"><div class="spd" style="background:#eee"></div>OSS GitHub</div><div class="sp"><div class="spd" style="background:var(--red)"></div>Reddit</div></div>
+        <div class="ai-snip">"Design system mastery with genuine backend curiosity — a rare combination."</div>
+      </div>
+      <div class="cc" onclick="selC(this,'Karim Sahraoui','84','Backend · Node.js / PostgreSQL / Redis','3 years OSS contributions. Stack Overflow PostgreSQL answers highly rated. 4 published npm packages with active maintenance.',80,85,92,70)">
+        <div class="cc-hd"><div class="cc-av" style="background:linear-gradient(135deg,#d97706,#fbbf24)">KS</div><div style="flex:1"><div class="cc-n">Karim Sahraoui</div><div class="cc-r">Backend · Node.js / PostgreSQL / Redis</div></div><div><div class="mpct">84%</div><div class="ml">match</div></div></div>
+        <div><div class="sp"><div class="spd" style="background:var(--blue)"></div>SO expert</div><div class="sp"><div class="spd" style="background:var(--teal)"></div>4 npm packages</div></div>
+        <div class="ai-snip">"Exceptional backend depth. Strong asset for projects requiring robust database expertise."</div>
+      </div>
+      <div class="cc" onclick="selC(this,'Lina Hamdi','79','Full-stack · Accessibility / Docs / React','8 Medium articles on accessibility. Consistent SO contributions. 2 npm packages. A developer who documents as much as she codes.',82,78,75,95)">
+        <div class="cc-hd"><div class="cc-av" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">LH</div><div style="flex:1"><div class="cc-n">Lina Hamdi</div><div class="cc-r">Full-stack · Accessibility / Docs / React</div></div><div><div class="mpct">79%</div><div class="ml">match</div></div></div>
+        <div><div class="sp"><div class="spd" style="background:var(--blue)"></div>Medium articles</div><div class="sp"><div class="spd" style="background:var(--amber)"></div>Accessibility</div></div>
+        <div class="ai-snip">"Documents as much as she codes. Excellent signal for teams that value internal communication."</div>
+      </div>
+    </div>
+    <div>
+      <div class="dp" id="dp">
+        <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:16px;font-weight:900;letter-spacing:-.3px;margin-bottom:2px" id="dp-n">Abdel Benali</div>
+        <div style="font-size:10px;color:var(--text2);margin-bottom:13px;font-family:'DM Mono',monospace" id="dp-r">Full-stack · TypeScript / React / Node.js</div>
+        <div class="dp-score"><div class="dp-sn" id="dp-s">92%</div><div class="dp-sl">Compatibility score</div></div>
+        <div class="slbl">Score breakdown</div>
+        <div class="dim-row"><div class="dim-l">Tech skills</div><div class="dim-trk"><div class="dim-fill" id="d1" style="width:95%"></div></div><div class="dim-v" id="d1v">95</div></div>
+        <div class="dim-row"><div class="dim-l">Communication</div><div class="dim-trk"><div class="dim-fill" id="d2" style="width:90%"></div></div><div class="dim-v" id="d2v">90</div></div>
+        <div class="dim-row"><div class="dim-l">Rigour</div><div class="dim-trk"><div class="dim-fill" id="d3" style="width:88%"></div></div><div class="dim-v" id="d3v">88</div></div>
+        <div class="dim-row"><div class="dim-l">Curiosity</div><div class="dim-trk"><div class="dim-fill" id="d4" style="width:85%"></div></div><div class="dim-v" id="d4v">85</div></div>
+        <div class="slbl" style="margin-top:13px">AI justification</div>
+        <div style="padding:10px 12px;background:var(--bg3);border-radius:var(--r);font-size:11px;color:var(--text2);line-height:1.65;margin:10px 0;border:1px solid var(--border)" id="dp-ai">Commit discipline on GitHub and pedagogical Stack Overflow answers match precisely the communication and technical profile described. Consistent across 7 platforms.</div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <button class="btn btn-t btn-sm" onclick="go('candidate')">View full profile →</button>
+          <button class="btn btn-g btn-sm">Contact candidate</button>
+          <button class="btn btn-g btn-sm">Move to interview</button>
+          <button class="btn btn-g btn-sm" onclick="go('public')">View public profile</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===== POST JOB ===== -->
+<div class="page" id="page-postjob">
+<div class="post-wrap">
+  <button class="back" onclick="go('recruiter')">← Back to dashboard</button>
+  <div class="ph" style="margin-bottom:18px"><div><div class="pt">Create a position</div><div class="ps">Richer descriptions = more precise AI matching</div></div></div>
+  <div class="form-row2" style="margin-bottom:12px">
+    <div class="fld" style="margin:0"><label class="lbl">Job title</label><input class="inp" type="text" placeholder="e.g. Senior full-stack developer"></div>
+    <div class="fld" style="margin:0"><label class="lbl">Contract</label><select class="inp"><option>Full-time</option><option>Freelance</option><option>Internship</option></select></div>
+  </div>
+  <div class="form-row2" style="margin-bottom:12px">
+    <div class="fld" style="margin:0"><label class="lbl">Location</label><input class="inp" type="text" placeholder="Algiers / Remote / Hybrid"></div>
+    <div class="fld" style="margin:0"><label class="lbl">Salary range</label><input class="inp" type="text" placeholder="80k – 110k DZD/mo"></div>
+  </div>
+  <div class="fld"><label class="lbl">The project — context & challenges</label><textarea class="ta" placeholder="Describe the product, vision, technical challenges. What makes this role stimulating?"></textarea><div class="hint">💡 The more context you give, the better Surfaced finds profiles who'll truly thrive here.</div></div>
+  <div class="fld"><label class="lbl">The ideal profile — in detail</label><textarea class="ta" placeholder="How does this person ideally work? What do they build in their spare time? How do they explain complex things?"></textarea></div>
+  <div class="fld"><label class="lbl">Team & culture</label><textarea class="ta" style="min-height:80px" placeholder="Team size, values, seniority level, how you work together..."></textarea></div>
+  <div class="fld">
+    <label class="lbl">Analyse on these platforms</label>
+    <div><div class="pc on" onclick="this.classList.toggle('on')"><div class="plt plt-sm" style="background:#1a1a1a">GH</div>GitHub</div><div class="pc on" onclick="this.classList.toggle('on')"><div class="plt plt-sm" style="background:#f48024">SO</div>Stack Overflow</div><div class="pc on" onclick="this.classList.toggle('on')"><div class="plt plt-sm" style="background:#0077b5">in</div>LinkedIn</div><div class="pc on" onclick="this.classList.toggle('on')"><div class="plt plt-sm" style="background:#1c1c1c">M</div>Medium</div><div class="pc on" onclick="this.classList.toggle('on')"><div class="plt plt-sm" style="background:#ff4500">R</div>Reddit</div><div class="pc" onclick="this.classList.toggle('on')"><div class="plt plt-sm" style="background:#20beff">K</div>Kaggle</div><div class="pc" onclick="this.classList.toggle('on')"><div class="plt plt-sm" style="background:#cb3837;font-size:7px">npm</div>npm / PyPI</div></div>
+  </div>
+  <div class="ai-prev"><div class="ai-prev-t">✦ Surfaced AI preview — detected criteria</div><div class="ai-prev-b">Based on your description, Surfaced will look for: <strong>TypeScript & React expertise</strong>, <strong>technical written communication</strong>, <strong>open source habits on GitHub</strong>, <strong>ability to mentor juniors</strong> and a <strong>product-impact mindset</strong>.</div></div>
+  <div style="display:flex;gap:9px;justify-content:flex-end;margin-top:18px">
+    <button class="btn btn-g btn-sm" onclick="go('recruiter')">Save draft</button>
+    <button class="btn btn-t btn-sm" onclick="go('shortlist')">Publish & launch AI →</button>
+  </div>
+</div>
+</div>
+
+<!-- ===== AI CHAT ===== -->
+<div class="page" id="page-aichat">
+<div class="chat-wrap">
+  <div class="chat-hd">
+    <div class="chat-av">✦</div>
+    <div><div style="font-size:13px;font-weight:700">Surfaced AI</div><div style="font-size:10px;color:var(--text2)">Powered by Claude · Profile analysis, shortlists & signal detection</div></div>
+    <div id="lbar-wrap" style="flex:1;padding:0 16px;display:none;align-items:center"><div class="lbar"></div></div>
+  </div>
+  <div class="chat-msgs" id="chat-msgs">
+    <div class="msg msg-ai">Hi! I'm the Surfaced AI — here's what I can do:<br><br><strong>For recruiters:</strong> generate shortlists, refine weights, explain match scores, give feedback on job descriptions<br><br><strong>For candidates:</strong> analyse your 7-platform profile, detect work style, identify strengths<br><br>What would you like to explore?</div>
+    <div class="sl-trigger" onclick="triggerSL()">✦ Generate shortlist — Senior full-stack developer →</div>
+    <div class="sl-trigger" onclick="triggerProfile()">◎ Full profile analysis — Abdel Benali (7 platforms) →</div>
+    <div class="sl-trigger" onclick="triggerRefine()">⟁ Refine: prioritise communication over technical depth →</div>
+  </div>
+  <div class="chat-inp-area">
+    <input class="chat-inp" id="cinp" type="text" placeholder="Ask about candidates, shortlists, profiles, signals..." onkeydown="if(event.key==='Enter')sendMsg()">
+    <button class="chat-send" id="csend" onclick="sendMsg()">Send →</button>
+  </div>
+</div>
+</div>
+
+<script>
+function go(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));document.querySelectorAll('.np').forEach(x=>x.classList.remove('on'));document.getElementById('page-'+p).classList.add('on');const ps=['landing','register','candidate','public','recruiter','shortlist','postjob','aichat'];const i=ps.indexOf(p);if(i>=0)document.querySelectorAll('.np')[i].classList.add('on');window.scrollTo(0,0);if(typeof gtag!=='undefined'){gtag('event','page_view',{page_title:p,page_location:window.location.href+'#'+p,page_path:'/'+p});}}
+function switchRole(r){document.getElementById('rbtn-c').classList.toggle('on',r==='c');document.getElementById('rbtn-r').classList.toggle('on',r==='r');document.getElementById('reg-c').style.display=r==='c'?'block':'none';document.getElementById('reg-r').style.display=r==='r'?'block':'none';}
+function toggleConn(el){const a=el.querySelector('.conn-act');el.classList.toggle('done');a.textContent=el.classList.contains('done')?'✓ CONNECTED':'CONNECT';}
+function selC(el,n,s,r,ai,d1,d2,d3,d4){document.querySelectorAll('.cc').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');document.getElementById('dp-n').textContent=n;document.getElementById('dp-s').textContent=s+'%';document.getElementById('dp-r').textContent=r;document.getElementById('dp-ai').textContent=ai;['d1','d2','d3','d4'].forEach((id,i)=>{const v=[d1,d2,d3,d4][i];document.getElementById(id).style.width=v+'%';document.getElementById(id+'v').textContent=v;});}
+const SYS=`You are Surfaced's AI recruitment assistant. Surfaced is a tech recruitment platform that analyses candidates' public contributions across 7 platforms (GitHub, Stack Overflow, LinkedIn, Medium/Dev.to, Reddit, Kaggle, npm/PyPI) to assess potential — not CV or work history. The platform tagline is "The talent was always there. Now it's Surfaced." and "Stop reading CVs. Start reading signals."
+
+Features: GitHub deep analysis (commits, READMEs, code reviews), work style detection (builder vs collaborator, generalist vs specialist), adjustable shortlist weights, public shareable profiles (surfaced.io/username), live activity signals.
+
+Your role: generate shortlists with match scores & justifications, refine shortlists based on weights, explain scores, analyse multi-platform profiles, detect work styles. Be concise, insightful, actionable. Respond in the language the user writes in (FR or EN).`;
+let hist=[];
+async function sendMsg(){const inp=document.getElementById('cinp');const m=inp.value.trim();if(!m)return;inp.value='';addMsg(m,'user');hist.push({role:'user',content:m});await callAI();}
+async function triggerSL(){const p='Generate a shortlist for: Senior full-stack developer. Requirements: TypeScript/React/Node.js, strong technical written communication (GitHub commits + SO answers + articles), open source mindset, ability to mentor juniors. Remote-first startup, 8-person team. Include GitHub activity as a key signal.';addMsg(p,'user');hist.push({role:'user',content:p});document.querySelectorAll('.sl-trigger').forEach(e=>e.style.display='none');await callAI();}
+async function triggerProfile(){const p='Full 7-platform profile analysis for Abdel Benali: GitHub (143 repos, 1,240 commits, disciplined commit messages, active OSS), Stack Overflow (4,230 rep, 89 answers, top 8% upvote ratio), Medium (12 technical articles), Reddit (200+ comments on r/webdev), LinkedIn (8 posts). Detect work style, key potential signals, and ideal role type.';addMsg(p,'user');hist.push({role:'user',content:p});document.querySelectorAll('.sl-trigger').forEach(e=>e.style.display='none');await callAI();}
+async function triggerRefine(){const p='Refine the shortlist for "Senior full-stack developer" with these weights: Communication quality 85%, GitHub activity 75%, Technical depth 70%, Community engagement 60%. Re-rank the 4 candidates and explain how the new weights change the ranking.';addMsg(p,'user');hist.push({role:'user',content:p});document.querySelectorAll('.sl-trigger').forEach(e=>e.style.display='none');await callAI();}
+function addMsg(t,type){const msgs=document.getElementById('chat-msgs');const d=document.createElement('div');d.className='msg msg-'+type;d.innerHTML=t.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d;}
+function addLoading(){const msgs=document.getElementById('chat-msgs');const d=document.createElement('div');d.className='msg msg-ai msg-loading';d.innerHTML='<div class="ld"></div><div class="ld"></div><div class="ld"></div>';msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d;}
+async function callAI(){const btn=document.getElementById('csend');const lbar=document.getElementById('lbar-wrap');btn.disabled=true;lbar.style.display='flex';const loader=addLoading();try{const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYS,messages:hist})});const data=await res.json();const reply=data.content?.[0]?.text||"Sorry, I couldn't generate a response.";hist.push({role:'assistant',content:reply});loader.remove();addMsg(reply,'ai');}catch(e){loader.remove();addMsg("Connection error. Please try again.",'ai');}btn.disabled=false;lbar.style.display='none';}
+</script>
+</body>
+</html>
